@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Chatroom</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script> 
+  <script> 
+      // make a connection to the server
+      var socket = io.connect(window.location.hostname, {port:window.location.port, connectTimeout:3000});
+      var username;
+
+      socket.on('connect', function(client){
+          username = prompt("Enter your name : ", "your name here");
+
+          socket.emit("setusername", {username:username});
+      });
+
+      socket.on('connect_failed', function(){
+          alert('The connection to the server failed.');
+      });
+
+      socket.on('message', function(message){
+          appendMessage(message.user + ": " + message.message);
+      });
+
+      // send a message to the server
+      function sendMessage(message){
+          if(!message){
+              // get the message from the input field
+              var msg = $("input#message").val(); 
+              $("input#message").val('');
+          } else {
+              var msg = message; 
+          }
+          console.log(msg);
+          if (msg.length > 0) { // stop empty messages
+              console.log(msg);
+              if (socket.emit("message", { message : msg })) {
+                  appendMessage('You: ' + msg);
+              }
+          }
+      }
+
+      // show the message on the screen
+      function appendMessage(message){
+          $('div#chat-box').prepend('<div class="msg">' + message + '</div>'); 
+      }
+  </script> 
+</head>
+<body>
+<div id="chat-field">
+  <form method="post" action="" onsubmit="return false;" />
+    <input type="text" name="message" id="message" value="" /><input id="client" name="client" value="" type="hidden" /><input type="submit" class="button" name="send" id="send" value="Send" onclick="sendMessage();" />
+  </form>
+<div id="chat-box"></div>
+</div>
+</body>
+</html>

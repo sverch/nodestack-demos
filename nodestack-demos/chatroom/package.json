@@ -1,0 +1,12 @@
+{
+    "name": "chatroom",
+    "version": "0.0.1",
+    "description": "An example of how to write a simple chat application using MongoDB",
+    "author": "Shaun Verch <shaun.verch@10gen.com>",
+    "dependencies": {
+        "mongodb": "1.2.8",
+        "node-uuid": "1.4.0",
+        "socket.io": "0.9.13"
+    },
+    "engine": "node >= 0.4.1"
+}

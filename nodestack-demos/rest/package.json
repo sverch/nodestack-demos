@@ -1,0 +1,11 @@
+{
+    "name": "rest",
+    "version": "0.0.1",
+    "description": "An example of how to write a simple rest application using MongoDB",
+    "author": "Shaun Verch <shaun.verch@10gen.com>",
+    "dependencies": {
+        "mongodb": "1.2.12",
+        "restify": "2.2.1"
+    },
+    "engine": "node >= 0.4.1"
+}
